@@ -1,0 +1,7 @@
+# Copy this file to terraform.tfvars and edit as needed.
+linode_api_token = "YOUR_API_TOKEN"
+root_password = "YOUR_ROOT_PASSWORD"
+
+# Update the following if you wish
+pub_ssh_key_file = "linode.pub"
+web_image_name = "linode/ubuntu20.04"
