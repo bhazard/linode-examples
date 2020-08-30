@@ -1,0 +1,4 @@
+inventory.yml
+
+# Pipfile.lock is not portable as dependencies will drag in machine or os-dependent modules.
+Pipfile.lock
