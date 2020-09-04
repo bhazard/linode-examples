@@ -1,0 +1,13 @@
+# Bill was here
+connection: sqlite3
+host: ""
+user: ""
+password: ""
+database: ""
+port: 0
+api_secret: ""
+language: en
+send_reports: false
+location: /app
+sqlfile: /app/xstatping.db
+letsencrypt_enable: false

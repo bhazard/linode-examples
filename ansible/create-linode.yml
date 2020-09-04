@@ -1,11 +1,10 @@
+---
 # Ansible playbook to create a linode.  A new linode will be created for each
 # playbook run.  Note that this playbook is run on the localhost and uses the
-# linode_v4 API.  Configure variables in group_vars/example_group/vars.
-
+# linode_v4 API.  Configure variables in group_vars/all.yml.
 - name: Create Linode
+  gather_facts: no
   hosts: localhost
-  vars_files:
-      - ./group_vars/example_group/vars
   tasks:
   - name: Create a new Linode.
     linode_v4:
@@ -17,11 +16,11 @@
       root_pass: "{{ password }}"
       authorized_keys: "{{ ssh_keys }}"
       group: example_group
-      tags: example_group
+      tags: example_group "creator:ansible"
       state: present
-    register: my_linode
+    register: new_linode
 
-  - name: Print info about my Linode instance
+  - name: Print info about the new Linode instance
     debug:
-      msg: "ID is {{ my_linode.instance.id }} IP is {{ my_linode.instance.ipv4 }}"
+      msg: "ID is {{ new_linode.instance.id }} and IP is {{ new_linode.instance.ipv4 }}"
             
