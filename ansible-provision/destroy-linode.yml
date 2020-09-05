@@ -1,0 +1,21 @@
+---
+# Destroy a linode
+# Takes label as an argument, so invoke via:
+#   ansible-playbook -i inventory.yml destroy-linode.yml --extra-vars "label=my-linode-label"
+- name: Destroy Linode
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars_prompt:
+    - name: confirm_destroy
+      prompt: "Are you sure you want to destroy linode {{ label }} (type 'yes') to confirm)?"
+
+  tasks:
+
+  - name: Delete a Linode Instance.
+    linode_v4:
+      access_token: "{{ token }}"
+      label: "{{ label }}"
+      state: absent
+    when: confirm_destroy == "yes"

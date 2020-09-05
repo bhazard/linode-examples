@@ -1,0 +1,47 @@
+---
+# Ansible playbook to create a linode.  A new linode will be created for each
+# playbook run.  Note that this playbook is run on the localhost and uses the
+# linode_v4 API.  Configure variables in group_vars/all.yml.
+- name: Create Linode
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  tasks:
+  - name: Create a new Linode.
+    linode_v4:
+      label: "{{ label }}"
+      access_token: "{{ token }}"
+      type: g6-nanode-1
+      region: us-east
+      image: linode/debian9
+      root_pass: "{{ password }}"
+      authorized_keys: "{{ ssh_keys }}"
+      group: example_group
+      tags: example_group "creator:ansible"
+      state: present
+    register: new_linode
+
+  - name: Print info about the new Linode instance
+    debug:
+      msg: "ID is {{ new_linode.instance.id }} and IP is {{ new_linode.instance.ipv4[0] }}"
+
+  - name: Add host to our (dynamic) inventory
+    add_host:
+      name: "{{ new_linode.instance.ipv4[0] }}"
+      groups: new
+    when: new_linode.instance is defined
+    changed_when: False
+
+
+- hosts: new
+  gather_facts: no
+  remote_user: root
+
+  tasks:
+  - name: Wait for port 22 to become available
+    local_action: "wait_for port=22 host={{ inventory_hostname }}"
+
+
+  - name: Print remote date
+    yum: name=tcpdump state=present            
