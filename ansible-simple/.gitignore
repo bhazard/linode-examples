@@ -1,0 +1,7 @@
+inventory.yml
+
+# This file contains token and similar.  Don't commit it!
+secrets.mk
+
+# Pipfile.lock is not portable as dependencies will drag in machine or os-dependent modules.
+Pipfile.lock
