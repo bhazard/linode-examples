@@ -4,6 +4,7 @@
 #   ansible-playbook -i inventory.yml destroy-linode.yml --extra-vars "label=my-linode-label"
 - name: Destroy Linode
   hosts: localhost
+  connection: local
   gather_facts: no
 
   vars_prompt:

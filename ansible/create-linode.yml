@@ -3,8 +3,9 @@
 # playbook run.  Note that this playbook is run on the localhost and uses the
 # linode_v4 API.  Configure variables in group_vars/all.yml.
 - name: Create Linode
-  gather_facts: no
   hosts: localhost
+  connection: local
+  gather_facts: no
   tasks:
   - name: Create a new Linode.
     linode_v4:
